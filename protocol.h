@@ -71,7 +71,7 @@ enum packet_header_offset_e {
 typedef enum {
     PROTOCOL_PACKET_TYPE_EMPTY = 0x00,      // 0x00 Empty packet type 
     PROTOCOL_PACKET_TYPE_CMD,               // 0x01 Command from ctxLink
-    Protocol_PACKET_TYPE_STATUS,            // 0x02 Status of ESP32 to ctxLink
+    PROTOCOL_PACKET_TYPE_STATUS,            // 0x02 Status of ESP32 to ctxLink
     PROTOCOL_PACKET_TYPE_FROM_GDB,          // 0x03 Packet from GDB
     PROTOCOL_PACKET_TYPE_TO_GDB,            // 0x04 Packet to GDB
     PROTOCOL_PACKET_TYPE_FROM_CTXLINK,      // 0x05 Packet from ctxLink
@@ -81,6 +81,29 @@ typedef enum {
     PROTOCOL_PACKET_TYPE_UART_TO_CTXLINK,   // 0x09 UART packet to ctxLink
     PROTOCOL_PACKET_CS_ACTIVATED            // 0x0a CS line activated by ctxLink
 } protocol_packet_type_e;
+
+/*
+    Define the format of the ESP32 status packet to ctxLink
+    
+    The status packet is used to inform ctxLink of the status of the ESP32, it has the following format:
+
+    +---------------------------------+
+    |     Status Type (1 byte)        |     (implicit data byte count)
+    +---------------------------------+
+    |        Status Value 0           |
+    +---------------------------------+
+    |               ...               |
+    +---------------------------------+
+    |        Status Value n           |
+    +---------------------------------+
+ */
+
+typedef enum {
+    PROTOCOL_PACKET_STATUS_TYPE_WIFI = 0x00, // 0x00 State of Wi-Fi connection, 0x01 = connected, 0x00 = disconnected
+    PROTOCOL_PACKET_STATUS_TYPE_GDB_CLIENT,      // 0x01 GDB client connected, 0x01 = connected, 0x00 = disconnected
+    PROTOCOL_PACKET_STATUS_TYPE_UART_CLIENT,    // 0x02 UART client connected, 0x01 = connected, 0x00 = disconnected
+    PROTOCOL_PACKET_STATUS_TYPE_SWO_CLIENT     // 0x03 SWO client connected, 0x01 = connected, 0x00 = disconnected 
+} protocol_packet_status_type_e;
 
 size_t package_data(uint8_t * buffer, size_t data_length, protocol_packet_type_e data_type, size_t buffer_size);
 void protocol_split(uint8_t *message, size_t *packet_size, protocol_packet_type_e *packet_type, uint8_t **data) ;
