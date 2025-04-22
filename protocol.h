@@ -102,8 +102,24 @@ typedef enum {
     PROTOCOL_PACKET_STATUS_TYPE_WIFI = 0x00, // 0x00 State of Wi-Fi connection, 0x01 = connected, 0x00 = disconnected
     PROTOCOL_PACKET_STATUS_TYPE_GDB_CLIENT,      // 0x01 GDB client connected, 0x01 = connected, 0x00 = disconnected
     PROTOCOL_PACKET_STATUS_TYPE_UART_CLIENT,    // 0x02 UART client connected, 0x01 = connected, 0x00 = disconnected
-    PROTOCOL_PACKET_STATUS_TYPE_SWO_CLIENT     // 0x03 SWO client connected, 0x01 = connected, 0x00 = disconnected 
+    PROTOCOL_PACKET_STATUS_TYPE_SWO_CLIENT,     // 0x03 SWO client connected, 0x01 = connected, 0x00 = disconnected 
+    PROTOCOL_PACKET_STATUS_TYPE_NETWORK_CLIENT, // 0x04 Network data structure describes the current network
 } protocol_packet_status_type_e;
+
+#define M2M_MAX_SSID_LEN 33 // Maximum length of the SSID string
+
+/**
+ * @brief Structure used to hold network connection data
+ * 
+ */
+typedef struct {
+	char network_ssid[M2M_MAX_SSID_LEN]; // AP connection SSID name.  Only valid in
+								   //  station mode.  Will be NULL in SoftAP
+								   //  mode or P2P mode.
+	uint8_t ip_address[4];          // connection IP address
+	uint8_t mac_address[6];      // MAC address of the peer Wi-Fi station
+	int8_t rssi;  
+} network_connection_info_s;
 
 size_t package_data(uint8_t * buffer, size_t data_length, protocol_packet_type_e data_type, size_t buffer_size);
 void protocol_split(uint8_t *message, size_t *packet_size, protocol_packet_type_e *packet_type, uint8_t **data) ;
