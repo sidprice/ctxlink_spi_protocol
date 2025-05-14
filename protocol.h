@@ -112,7 +112,7 @@ typedef enum {
   * 
   */
 typedef struct {
-	protocol_packet_status_type_e type;  // Type of status packet
+	uint8_t type;                        // Type of status packet
 	char network_ssid[M2M_MAX_SSID_LEN]; // AP connection SSID name.  Only valid in
 										 //  station mode.  Will be NULL in SoftAP
 										 //  mode or P2P mode.
