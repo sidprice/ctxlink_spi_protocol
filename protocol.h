@@ -123,8 +123,8 @@ typedef struct {
 } network_connection_info_s;
 
 typedef struct {
-	protocol_packet_status_type_e type; // Type of status packet
-	uint8_t status;                     // 0x00 = disconnected, 0x01 = connected
+	uint8_t type;   // protocol_packet_status_type_e Type of status packet
+	uint8_t status; // 0x00 = disconnected, 0x01 = connected
 } protocol_packet_status_s;
 
 size_t package_data(uint8_t *buffer, size_t data_length, protocol_packet_type_e data_type);
