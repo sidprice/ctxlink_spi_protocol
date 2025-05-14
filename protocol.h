@@ -113,6 +113,7 @@ typedef enum {
   */
 typedef struct {
 	uint8_t type;                        // Type of status packet
+	uint8_t connected;                   // 0x00 = disconnected, 0x01 = connected
 	char network_ssid[M2M_MAX_SSID_LEN]; // AP connection SSID name.  Only valid in
 										 //  station mode.  Will be NULL in SoftAP
 										 //  mode or P2P mode.
