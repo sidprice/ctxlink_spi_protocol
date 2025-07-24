@@ -79,6 +79,7 @@ typedef enum {
 	PROTOCOL_PACKET_TYPE_UART_FROM_CTXLINK, // 0x08 UART packet from ctxLink
 	PROTOCOL_PACKET_TYPE_UART_TO_CTXLINK,   // 0x09 UART packet to ctxLink
 	PROTOCOL_PACKET_TYPE_NETWORK_INFO,      // 0x0a Network information packet type
+	PROTOCOL_PACKET_TYPE_SET_NETWORK_INFO,  // 0x0b Set network information packet type
 } protocol_packet_type_e;
 
 /*
