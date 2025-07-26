@@ -106,7 +106,7 @@ typedef enum {
 	PROTOCOL_PACKET_STATUS_TYPE_NETWORK_CLIENT, // 0x04 Network data structure describes the current network
 } protocol_packet_status_type_e;
 
-#define MAX_SSID_LENGTH 64 // Maximum length of the SSID string
+#define MAX_SSID_LENGTH        64 // Maximum length of the SSID string
 #define MAX_PASS_PHRASE_LENGTH 64 // Maximum length of the passphrase string
 
 /**
@@ -114,13 +114,13 @@ typedef enum {
   * 
   */
 typedef struct {
-	uint8_t type;                        // Type of status packet
-	uint8_t connected;                   // 0x00 = disconnected, 0x01 = connected
-	char network_ssid[MAX_SSID_LENGTH]; // AP connection SSID name.  Only valid in
-										 //  station mode.  Will be NULL in SoftAP
-										 //  mode or P2P mode.
-	uint8_t ip_address[4];               // connection IP address
-	uint8_t mac_address[6];              // MAC address of the peer Wi-Fi station
+	uint8_t type;                             // Type of status packet
+	uint8_t connected;                        // 0x00 = disconnected, 0x01 = connected
+	char network_ssid[MAX_SSID_LENGTH];       // AP connection SSID name.
+	char pass_phrase[MAX_PASS_PHRASE_LENGTH]; // AP connection passphrase
+	uint8_t network_type;                     // 0x00 = STA, 0x01
+	uint8_t ip_address[4];                    // connection IP address
+	uint8_t mac_address[6];                   // MAC address of the peer Wi-Fi station
 	int8_t rssi;
 } network_connection_info_s;
 
