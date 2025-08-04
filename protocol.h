@@ -125,10 +125,24 @@ typedef struct {
 	int8_t rssi;
 } network_connection_info_s;
 
+/**
+ * @brief Structure used to hold status packet information
+ * 
+ */
 typedef struct {
 	uint8_t type;   // protocol_packet_status_type_e Type of status packet
 	uint8_t status; // 0x00 = disconnected, 0x01 = connected
 } protocol_packet_status_s;
+
+/**
+ * @brief Structure used to hold command packet information
+ * 
+ * Command packets are general internal ESP32 commands, e.g. Close and reopen a server.
+ */
+typedef struct {
+  uint8_t type; // protocol_packet_type_e Type of packet
+  uint8_t data[8]; // Command specific data, optional, fill uniused bytes with 0x00 
+} protocol_packet_command_s;
 
 size_t package_data(uint8_t *buffer, size_t data_length, protocol_packet_type_e data_type);
 size_t protocol_split(uint8_t *message, size_t *packet_size, protocol_packet_type_e *packet_type, uint8_t **data);
