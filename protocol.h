@@ -78,9 +78,10 @@ typedef enum {
 	PROTOCOL_PACKET_TYPE_SWO,               // 0x07 SWO packet type - to network
 	PROTOCOL_PACKET_TYPE_UART_FROM_CTXLINK, // 0x08 UART packet from ctxLink
 	PROTOCOL_PACKET_TYPE_UART_TO_CTXLINK,   // 0x09 UART packet to ctxLink
-	PROTOCOL_PACKET_TYPE_NETWORK_INFO,      // 0x0a Network information packet type
-	PROTOCOL_PACKET_TYPE_SET_NETWORK_INFO,  // 0x0b Set network information packet type
-	PROTOCOL_PACKEY_TYPE_RECONNECT,         // 0x0c Reconnect packet type
+	PROTOCOL_PACKET_TYPE_TO_CLIENT,         // 0x0A Packet to Client
+	PROTOCOL_PACKET_TYPE_NETWORK_INFO,      // 0x0B Network information packet type
+	PROTOCOL_PACKET_TYPE_SET_NETWORK_INFO,  // 0x0C Set network information packet type
+	PROTOCOL_PACKET_TYPE_COMMAND,           // 0x0D Internal Command packet type
 } protocol_packet_type_e;
 
 /*
@@ -141,8 +142,18 @@ typedef struct {
  */
 typedef struct {
   uint8_t type; // protocol_packet_type_e Type of packet
+  uint8_t command; // Command identifier
   uint8_t data[8]; // Command specific data, optional, fill uniused bytes with 0x00 
 } protocol_packet_command_s;
+
+typedef enum {
+  PROTOCOL_PACKET_TYPE_CMD_SHUTDOWN_GDB_SERVER = 0x01, // Shutdown the GDB server
+  PROTOCOL_PACKET_TYPE_CMD_START_GDB_SERVER = 0x02,    // Start the GDB server
+  PROTOCOL_PACKET_TYPE_CMD_SHUTDOWN_UART_SERVER = 0x03,       // Shutdown the UART server
+  PROTOCOL_PACKET_TYPE_CMD_START_UART_SERVER = 0x04,          // Start the UART server
+  PROTOCOL_PACKET_TYPE_CMD_SHUTDOWN_SWO_SERVER = 0x05,        // Shutdown the SWO server
+  PROTOCOL_PACKET_TYPE_CMD_START_SWO_SERVER = 0x06,           // Start the SWO server
+} protocol_command_type_e;
 
 size_t package_data(uint8_t *buffer, size_t data_length, protocol_packet_type_e data_type);
 size_t protocol_split(uint8_t *message, size_t *packet_size, protocol_packet_type_e *packet_type, uint8_t **data);
